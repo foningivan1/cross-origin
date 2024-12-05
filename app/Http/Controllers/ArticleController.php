@@ -26,13 +26,13 @@ class ArticleController extends Controller
     public function index()
 {
     // Récupérer la date actuelle
-    $date = date('Y-m-d'); // Exemple de date formatée : '2024-10-22'
+    $date = date('Y-m-d');
 
     // Appeler le service pour récupérer les articles
     $articles = $this->leMondeService->getArticles($date);
 
     // Affichage pour déboguer (afficher le contenu de $articles)
-    dd($articles);
+    // dd($articles);
     Log::info($articles);
 
     // Retourner la vue avec les articles

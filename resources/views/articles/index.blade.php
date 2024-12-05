@@ -1,74 +1,73 @@
-<!-- @extends('layouts.app')
-
-@section('content')
-    <h1>Articles du jour - Le Monde</h1>
-
-    @if (isset($message))
-        <p>{{ $message }}</p>
-    @else
-        <ul>
-            @foreach ($articles as $article)
-                <li>
-                    <h2>{{ $article['title'] }}</h2>
-                    <p>{{ $article['summary'] }}</p>
-                    <a href="{{ $article['url'] }}" target="_blank">Lire l'article complet</a>
-                </li>
-            @endforeach
-        </ul>
-    @endif
-@endsection -->
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Articles - Le Monde</title>
-</head>
-<body>
-    <h1>Articles de Le Monde</h1>
-
-    @if(!empty($articles['data']) && count($articles['data']) > 0)
-        <ul>
-            @foreach($articles['data'] as $article)
-                <li>
-                    <h2>{{ $article['title'] }}</h2>
-                    <p>{{ $article['content'] }}</p>
-                    <small>Publié le : {{ $article['published_at'] }}</small>
-                </li>
-            @endforeach
-        </ul>
-    @else
-        <p>Aucun article disponible pour aujourd'hui.</p>
-    @endif
-</body>
-</html> -->
-<!-- resources/views/articles/index.blade.php -->
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Articles du Le Monde</title>
+    <title>Liste des Articles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
-    <h1>Articles en Une du journal Le Monde - {{ date('d/m/Y') }}</h1>
-
-    @if (empty($articles))
-        <p>Aucun article disponible pour aujourd'hui.</p>
-    @else
-    <ul>
-    @foreach ($articles as $article)
-        <li>
-            <h2>{{ $article['title'] }}</h2>
-            <p>{{ $article['summary'] }}</p>
-            <a href="{{ $article['url'] }}" target="_blank">Lire l'article complet</a>
-        </li>
-    @endforeach
-</ul>
-
-    @endif
+    <div class="container">
+        <h1>Liste des Articles</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Contenu</th>
+                    <th>Publié le</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($articles as $index => $article)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $article['title'] ?? 'N/A' }}</td>
+                        <td>{{ $article['author'] ?? 'N/A' }}</td>
+                        <td>{{ Str::limit($article['content'] ?? 'Pas de contenu', 50) }}</td>
+                        <td>{{ $article['published_at'] ?? 'N/A' }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Aucun article disponible</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
-
-
-
-
